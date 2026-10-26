@@ -31,8 +31,8 @@ export default function Register() {
     <main className="wrap register">
       <h1 className="title small-title">The register</h1>
       <p className="lede">
-        Whisper base listened to {rows.length} windows of nothing: digital silence, and white, pink and brown noise and mains hum at different levels, eight seconds each, in {langs} languages. Not one of them had a voice in it. It still
-        said something in almost all of them.
+        Whisper base listened to {rows.length} windows of nothing: digital silence, and white, pink and brown noise and mains hum at different levels, eight seconds each, in {langs} languages. Not one of them had a voice in it. It said
+        something in every one.
       </p>
 
       <div className="stats">
