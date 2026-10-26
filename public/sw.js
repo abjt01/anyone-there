@@ -1,7 +1,7 @@
 // Keeps the séance working with the internet off. Whisper's own files are
 // cached by Transformers.js (in its own cache), so they're skipped here.
 const CACHE = "anyone-there-v1";
-const SHELL = ["/", "/register", "/capture-worklet.js", "/manifest.webmanifest", "/icon.svg"];
+const SHELL = ["/", "/register/", "/capture-worklet.js", "/manifest.webmanifest", "/icon.svg"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

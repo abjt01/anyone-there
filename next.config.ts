@@ -13,6 +13,8 @@ const isolation = [
 
 const nextConfig: NextConfig = {
   output: process.env.NODE_ENV === "production" ? "export" : undefined,
+  // every page exports as a folder with an index.html, which any static host serves
+  trailingSlash: true,
   outputFileTracingRoot: root,
   turbopack: { root },
   ...(process.env.NODE_ENV === "production" ? {} : { headers: async () => [{ source: "/:path*", headers: isolation }] }),
