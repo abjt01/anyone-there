@@ -106,6 +106,11 @@ export class Medium {
 
 export type Piece = { text: string; p: number; alts: { text: string; p: number }[]; tokens: number };
 
+// Scripts whose letters join or stack (Devanagari, Tamil, Arabic, Thai…) and
+// combining marks: a piece that starts with one of these belongs to the word before it.
+const JOINS =
+  /^[\p{M}\p{Script=Devanagari}\p{Script=Bengali}\p{Script=Gurmukhi}\p{Script=Gujarati}\p{Script=Oriya}\p{Script=Tamil}\p{Script=Telugu}\p{Script=Kannada}\p{Script=Malayalam}\p{Script=Sinhala}\p{Script=Arabic}\p{Script=Hebrew}\p{Script=Thai}\p{Script=Lao}\p{Script=Khmer}\p{Script=Myanmar}\p{Script=Tibetan}\u200C\u200D]/u;
+
 // Whisper's tokens are bytes, so one Devanagari or Chinese character can take
 // two or three of them. Group tokens until they decode to whole characters.
 export function pieces(steps: Step[], decode: (ids: number[]) => string, isSpecial: (id: number) => boolean): Piece[] {
@@ -122,6 +127,16 @@ export function pieces(steps: Step[], decode: (ids: number[]) => string, isSpeci
     const text = now.slice(before.length);
     before = now;
     const first = buf[0];
+    const prev = out.at(-1);
+    if (prev && JOINS.test(text) && !/^\s/.test(text)) {
+      // shaped scripts: a word drawn in separate pieces falls apart, so keep it whole
+      prev.text += text;
+      prev.p *= buf.reduce((acc, x) => acc * x.p, 1);
+      prev.alts = [];
+      prev.tokens += buf.length;
+      buf = [];
+      continue;
+    }
     out.push({
       text,
       // the chance of the whole piece is the product of its byte tokens

@@ -76,3 +76,17 @@ test("an unfinished character at the end is left out", () => {
   const out = pieces([{ id: 104, p: 1, alts: [] }, { id: a, p: 1, alts: [] }, { id: b, p: 1, alts: [] }].slice(0, 2), decode, () => false);
   assert.deepEqual(out.map((p) => p.text), ["h"]);
 });
+
+test("words in scripts that join stay whole, words apart stay apart", () => {
+  // each token is a whole string here; ids index into this table
+  const table = [" आ", "प", " प", "ु", "व", " the", "re", " مر", "حبا"];
+  const decode = (ids: number[]) => ids.map((i) => table[i]).join("");
+  const steps = table.map((_, id) => ({ id, p: 0.9, alts: [{ id: 0, p: 0.05 }] }));
+  const out = pieces(steps, decode, () => false);
+  assert.deepEqual(out.map((p) => p.text), [" आप", " पुव", " the", "re", " مرحبا"]);
+  assert.equal(out[1].tokens, 3);
+  assert.ok(Math.abs(out[1].p - 0.9 ** 3) < 1e-12);
+  assert.deepEqual(out[1].alts, []);
+  // a Latin piece keeps its runners-up
+  assert.equal(out[2].alts.length, 1);
+});
