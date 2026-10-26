@@ -1,0 +1,10 @@
+{
+  "name": "Anyone there?",
+  "short_name": "Anyone there",
+  "description": "A spirit box made of Whisper, running on your own device.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0b10",
+  "theme_color": "#0d0b10",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
