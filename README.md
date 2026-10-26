@@ -9,7 +9,7 @@ Whisper is the open speech model inside a lot of transcription apps. Give it an 
 
 Then it tells you where each spirit comes from.
 
-**Try it:** [anyone-there.onrender.com](https://anyone-there.onrender.com). The first visit downloads the model once (79 MB); after that it works with the internet off.
+**Try it:** [anyone-there.onrender.com](https://anyone-there.onrender.com). The first visit downloads the model and its runtime once (about 100 MB); after that it works with the internet off.
 
 ![Recording: a sweep through the languages, on static](docs/demo.gif)
 

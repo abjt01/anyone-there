@@ -190,7 +190,7 @@ export default function Seance() {
         )}
         <Controls settings={settings} set={set} />
         <p className="small muted">
-          Whisper runs on this device. The room is never recorded to a server, there&apos;s no account, and after the first visit it works with the internet off. The first visit downloads the model once: 79 MB.
+          Whisper runs on this device. The room is never recorded to a server, there&apos;s no account, and after the first visit it works with the internet off. The first visit downloads the model and its runtime once, about 100 MB.
         </p>
         <p className="small">
           <Link href="/register">The register</Link>: every spirit found so far, what it says and where it comes from.
