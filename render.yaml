@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: anyone-there
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: out
+    # only deploy commits that pass CI
+    autoDeployTrigger: checksPass
+    headers:
+      # lets Whisper run on several threads in the browser
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: same-origin
+      - path: /*
+        name: Cross-Origin-Embedder-Policy
+        value: require-corp
+      - path: /models/*
+        name: Cache-Control
+        value: public, max-age=604800
+      - path: /_next/static/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
