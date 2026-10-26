@@ -154,7 +154,8 @@ export class SpiritBox {
 
     const isSpecial = (id: number) => id >= this.ids.eot;
     const spoken = medium.steps.filter((s) => !isSpecial(s.id));
-    const text = this.tokenizer.decode(spoken.map((s) => s.id), { skip_special_tokens: true }).trim();
+    // a chant cut off by the token limit can end halfway through a character
+    const text = this.tokenizer.decode(spoken.map((s) => s.id), { skip_special_tokens: true }).replace(/\uFFFD+$/, "").trim();
     // openai/whisper averages log-probabilities over every sampled token, the end token included
     const avgLogprob = medium.steps.length ? medium.steps.reduce((a, s) => a + Math.log(Math.max(s.p, 1e-12)), 0) / medium.steps.length : 0;
     return {
