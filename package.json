@@ -1,0 +1,39 @@
+{
+  "name": "anyone-there",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A spirit box that runs Whisper on your own device with its ghost filters off, and listens to an empty room",
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/copy-ort.mjs",
+    "dev": "next dev -p 4320",
+    "prebuild": "node scripts/copy-ort.mjs",
+    "build": "next build",
+    "start": "node --experimental-strip-types test/helpers/serve.ts out 4320",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types \"test/unit/*.test.ts\"",
+    "test:model": "node --test --test-concurrency=1 --experimental-strip-types test/model.test.ts",
+    "test:e2e": "node --test --test-concurrency=1 --experimental-strip-types test/e2e.test.ts",
+    "sweep": "node --experimental-strip-types scripts/sweep.ts"
+  },
+  "engines": {
+    "node": ">=22.6"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@huggingface/transformers": "^3.8.1",
+    "next": "^16.4.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.3",
+    "puppeteer-core": "^25.16.0",
+    "typescript": "^6.0.3"
+  }
+}
